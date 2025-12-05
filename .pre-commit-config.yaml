@@ -86,4 +86,11 @@ repos:
     - id: formate
       exclude: ^(doc-source/conf|__pkginfo__|setup)\.(_)?py$
 
+ - repo: https://github.com/python-coincidence/dep_checker
+   rev: v0.8.0
+   hooks:
+    - id: dep_checker
+      args:
+       - notify_rs
+
 # Custom hooks can be added below this comment
