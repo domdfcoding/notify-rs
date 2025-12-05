@@ -14,13 +14,13 @@ assert n.get_subtitle() is None
 # assert n.get_urgency() == URGENCY_CRITICAL
 assert n.get_timeout() == TIMEOUT_DEFAULT
 
-handle = n.show()
-
 if sys.platform == "win32":
-	assert handle is None
+	assert n.show() is None
 else:
 	# this package
 	from notify_rs import NotificationHandle
+
+	handle = n.show()
 
 	assert isinstance(handle, NotificationHandle)
 	handle.id()
