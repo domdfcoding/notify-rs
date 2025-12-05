@@ -198,10 +198,10 @@ impl PyNotification {
 	}
 
 	#[cfg(not(target_family = "unix"))]
-	fn show(slf: PyRef<Self>) -> PyResult {
+	fn show(slf: PyRef<Self>) -> PyResult<()> {
 		match slf.0.show() {
 			Err(error) => Err(PyValueError::new_err(error.to_string())),
-			Ok(result) => Ok(),
+			Ok(_) => Ok(()),
 		}
 	}
 	// TODO: async fn show_async(&self) -> Result<NotificationHandle>
@@ -214,7 +214,10 @@ impl PyNotification {
 #[pymodule]
 fn notify_rs(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
 	m.add_class::<PyNotification>().unwrap();
+
+	#[cfg(target_family = "unix")]
 	m.add_class::<PyNotificationHandle>().unwrap();
+
 	m.add("TIMEOUT_NEVER", -2).unwrap();
 	m.add("TIMEOUT_DEFAULT", -1).unwrap();
 	m.add("URGENCY_LOW", 0).unwrap();
