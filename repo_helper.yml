@@ -24,3 +24,7 @@ python_versions:
 
 classifiers:
   - "Programming Language :: Rust"
+
+extra_lint_paths:
+  - test.py
+  - notify_rs.pyi

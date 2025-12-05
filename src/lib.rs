@@ -90,7 +90,7 @@ impl PyNotification {
 	// TODO: fn get_actions<'a>(slf: PyRefMut<'a, Self>) -> PyResult<Vec<String>>{
 	// 	Ok(slf.0.actions)
 	// }
-	#[getter]
+	// #[getter]
 	fn get_timeout<'a>(slf: PyRefMut<'a, Self>) -> PyResult<i32>{
 		match slf.0.timeout {
 			Timeout::Never => Ok(-2),
@@ -201,7 +201,7 @@ fn notify_rs(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add("TIMEOUT_DEFAULT", -1).unwrap();
     m.add("URGENCY_LOW", 0).unwrap();
     m.add("URGENCY_NORMAL", 1).unwrap();
-    m.add("URGENCY_CRITICAL", 1).unwrap();
+    m.add("URGENCY_CRITICAL", 2).unwrap();
 
     Ok(())
 }
