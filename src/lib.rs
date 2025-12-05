@@ -38,6 +38,8 @@ impl PyNotificationHandle {
 	// }
 	// TODO: fn on_close<A>(self, handler: impl CloseHandler<A>)
 	// TODO: fn update(&mut self)
+	// TODO: macOS
+    #[cfg(target_os = "linux")]
 	fn id(&self) -> PyResult<u32> {
 		Ok(self.0.id())
 	}
@@ -117,7 +119,8 @@ impl PyNotification {
 		slf.0.subtitle(subtitle);
 		Ok(slf)
 	}
-	fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: &str) -> PyResult<PyRefMut<'a, Self>> {
+	#[cfg(not(target_os = "macos"))]
+    fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.image_path(path);
 		Ok(slf)
 	}

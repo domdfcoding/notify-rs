@@ -11,4 +11,6 @@ assert n.get_subtitle() is None
 # assert n.get_urgency() == URGENCY_CRITICAL
 assert n.get_timeout() == TIMEOUT_DEFAULT
 
-assert isinstance(n.show(), NotificationHandle)
+handle = n.show()
+assert isinstance(handle, NotificationHandle)
+handle.id()
