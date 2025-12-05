@@ -1,5 +1,8 @@
+# stdlib
+import sys
+
 # this package
-from notify_rs import TIMEOUT_DEFAULT, URGENCY_CRITICAL, Notification, NotificationHandle
+from notify_rs import TIMEOUT_DEFAULT, URGENCY_CRITICAL, Notification
 
 n = Notification().summary("The summary").body("The body").urgency(URGENCY_CRITICAL)
 
@@ -12,5 +15,12 @@ assert n.get_subtitle() is None
 assert n.get_timeout() == TIMEOUT_DEFAULT
 
 handle = n.show()
-assert isinstance(handle, NotificationHandle)
-handle.id()
+
+if sys.platform == "win32":
+	assert handle is None
+else:
+	# this package
+	from notify_rs import NotificationHandle
+
+	assert isinstance(handle, NotificationHandle)
+	handle.id()

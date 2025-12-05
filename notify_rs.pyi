@@ -6,7 +6,7 @@ if sys.platform != "win32":
 	class NotificationHandle:
 		if sys.platform == "linux":
 
-			def id(self) -> int: ...
+			def id(self) -> int: ...  # noqa: A001  # pylint: disable=redefined-builtin
 
 class Notification:
 	def appname(self, appname: str) -> Notification: ...
