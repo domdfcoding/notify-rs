@@ -28,3 +28,6 @@ classifiers:
 extra_lint_paths:
   - test.py
   - notify_rs.pyi
+
+exclude_files:
+ - actions

@@ -166,16 +166,41 @@ jobs:
       # Used to generate artifact attestation
       attestations: write
     steps:
+      - name: Checkout 🛎️
+        uses: "actions/checkout@v4"
+        if: startsWith(github.ref, 'refs/tags/')
+
+      - name: Setup Python 🐍
+        uses: "actions/setup-python@v5"
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies 🔧
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install --upgrade tox~=3.0
+
       - uses: actions/download-artifact@v4
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
         with:
           subject-path: 'wheels-*/*'
-      - name: Publish to PyPI
-        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+
+      - name: Upload distribution to PyPI 🚀
+        if: startsWith(github.ref, 'refs/tags/')
         uses: PyO3/maturin-action@v1
         env:
-          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         with:
           command: upload
           args: --non-interactive --skip-existing wheels-*/*
+
+      - name: Close milestone 🚪
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          python -m pip install --upgrade github3.py packaging
+          python .github/milestones.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
