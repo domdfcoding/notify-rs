@@ -460,6 +460,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "notify-rs"
+version = "0.1.0"
+dependencies = [
+ "notify-rust",
+ "pyo3",
+]
+
+[[package]]
 name = "notify-rust"
 version = "4.11.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -471,14 +479,6 @@ dependencies = [
  "serde",
  "tauri-winrt-notification",
  "zbus",
-]
-
-[[package]]
-name = "notify-rust-py"
-version = "0.1.0"
-dependencies = [
- "notify-rust",
- "pyo3",
 ]
 
 [[package]]

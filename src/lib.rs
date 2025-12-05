@@ -194,7 +194,7 @@ impl PyNotification {
 }
 
 #[pymodule]
-fn notify_rust_py(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn notify_rs(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<PyNotification>().unwrap();
     m.add_class::<PyNotificationHandle>().unwrap();
     m.add("TIMEOUT_NEVER", -2).unwrap();
