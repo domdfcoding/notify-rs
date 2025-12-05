@@ -62,6 +62,42 @@ impl PyNotification {
         Ok(PyNotification::new())
     }
 
+	// #[getter]
+	fn get_appname<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String>{
+		Ok(slf.0.appname.clone())
+	}
+	// #[getter]
+	fn get_summary<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String>{
+		Ok(slf.0.summary.clone())
+	}
+	// #[getter]
+	fn get_subtitle<'a>(slf: PyRefMut<'a, Self>) -> PyResult<Option<String>>{
+		Ok(slf.0.subtitle.clone())
+	}
+	// #[getter]
+	fn get_body<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String>{
+		Ok(slf.0.body.clone())
+	}
+	// #[getter]
+	fn get_icon<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String>{
+		Ok(slf.0.icon.clone())
+	}
+	// #[getter]
+	// TODO: fn get_hints<'a>(slf: PyRefMut<'a, Self>) -> PyResult<HashSet<Hint>>{
+	// 	Ok(slf.0.hints)
+	// }
+	// #[getter]
+	// TODO: fn get_actions<'a>(slf: PyRefMut<'a, Self>) -> PyResult<Vec<String>>{
+	// 	Ok(slf.0.actions)
+	// }
+	#[getter]
+	fn get_timeout<'a>(slf: PyRefMut<'a, Self>) -> PyResult<i32>{
+		match slf.0.timeout {
+			Timeout::Never => Ok(-2),
+			Timeout::Default => Ok(-1),
+			_ => Ok(slf.0.timeout.into()),
+		}
+	}
 
     fn appname<'a>(mut slf: PyRefMut<'a, Self>, appname: &str) -> PyResult<PyRefMut<'a, Self>> {
         slf.0.appname(appname);
