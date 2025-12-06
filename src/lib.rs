@@ -42,6 +42,7 @@ impl PyNotificationHandle {
 	// TODO: fn update(&mut self)
 	// TODO: macOS
     #[cfg(target_os = "linux")]
+	#[pyo3(signature = () -> "Notification")]
 	fn id(&self) -> PyResult<u32> {
 		Ok(self.0.id())
 	}
@@ -78,26 +79,31 @@ impl PyNotification {
 
 	/// Filled by default with executable name.
 	// #[getter]
+	#[pyo3(signature = () -> "str")]
 	fn get_appname<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.appname.clone())
 	}
 	/// Single line to summarize the content.
 	// #[getter]
+	#[pyo3(signature = () -> "str")]
 	fn get_summary<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.summary.clone())
 	}
 	/// Subtitle for macOS
 	// #[getter]
+	#[pyo3(signature = () -> "str | None")]
 	fn get_subtitle<'a>(slf: PyRefMut<'a, Self>) -> PyResult<Option<String>> {
 		Ok(slf.0.subtitle.clone())
 	}
 	/// Multiple lines possible, may support simple markup, check out get_capabilities() -> body-markup and body-hyperlinks.
 	// #[getter]
+	#[pyo3(signature = () -> "str")]
 	fn get_body<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.body.clone())
 	}
 	/// Use a file:// URI or a name in an icon theme, must be compliant freedesktop.org.
 	// #[getter]
+	#[pyo3(signature = () -> "str")]
 	fn get_icon<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.icon.clone())
 	}
@@ -111,6 +117,7 @@ impl PyNotification {
 	// }
 	/// Lifetime of the Notification in ms. Often not respected by server, sorry.
 	// #[getter]
+	#[pyo3(signature = () -> "int")]
 	fn get_timeout<'a>(slf: PyRefMut<'a, Self>) -> PyResult<i32> {
 		match slf.0.timeout {
 			Timeout::Never => Ok(-2),
@@ -120,6 +127,7 @@ impl PyNotification {
 	}
 
 	/// Overwrite the appname field.
+	#[pyo3(signature = (appname: "str") -> "Notification")]
 	fn appname<'a>(mut slf: PyRefMut<'a, Self>, appname: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.appname(appname);
 		Ok(slf)
@@ -127,6 +135,7 @@ impl PyNotification {
 	/// Set the summary.
 	///
 	/// Often acts as title of the notification. For more elaborate content use the body field.
+	#[pyo3(signature = (summary: "str") -> "Notification")]
 	fn summary<'a>(mut slf: PyRefMut<'a, Self>, summary: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.summary(summary);
 		Ok(slf)
@@ -134,15 +143,18 @@ impl PyNotification {
 	/// Set the subtitle.
 	///
 	/// This is only useful on macOS; It’s not part of the XDG specification.
+	#[pyo3(signature = (subtitle: "str") -> "Notification")]
 	fn subtitle<'a>(mut slf: PyRefMut<'a, Self>, subtitle: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.subtitle(subtitle);
 		Ok(slf)
 	}
+	#[pyo3(signature = (path: "str") -> "Notification")]
 	#[cfg(not(target_os = "macos"))]
     fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.image_path(path);
 		Ok(slf)
 	}
+	#[pyo3(signature = (name: "str") -> "Notification")]
 	fn sound_name<'a>(mut slf: PyRefMut<'a, Self>, name: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.sound_name(name);
 		Ok(slf)
@@ -150,6 +162,7 @@ impl PyNotification {
 	/// Set the content of the body field.
 	///
 	/// Multiline textual content of the notification. Each line should be treated as a paragraph. Simple html markup should be supported, depending on the server implementation.
+	#[pyo3(signature = (body: "str") -> "Notification")]
 	fn body<'a>(mut slf: PyRefMut<'a, Self>, body: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.body(body);
 		Ok(slf)
@@ -160,6 +173,7 @@ impl PyNotification {
 	/// You can also use an absolute path to a file.
 	///
 	/// .. note:: macOS does not have support manually setting the icon
+	#[pyo3(signature = (icon: "str") -> "Notification")]
 	fn icon<'a>(mut slf: PyRefMut<'a, Self>, icon: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.icon(icon);
 		Ok(slf)
@@ -169,6 +183,7 @@ impl PyNotification {
 	/// This looks at your binary’s name and uses it to set the icon.
 	///
 	/// .. note:: macOS does not have support manually setting the icon
+	#[pyo3(signature = () -> "Notification")]
 	fn auto_icon<'a>(mut slf: PyRefMut<'a, Self>) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.auto_icon();
 		Ok(slf)
@@ -178,6 +193,7 @@ impl PyNotification {
 	// 	Ok(slf)
 	// }
 	/// Set the timeout.
+	#[pyo3(signature = (timeout: "int") -> "Notification")]
 	fn timeout<'a>(mut slf: PyRefMut<'a, Self>, timeout: i32) -> PyResult<PyRefMut<'a, Self>> {
 		match timeout {
 			-1 => slf.0.timeout(Timeout::Default),
@@ -196,6 +212,7 @@ impl PyNotification {
 	}
 
 	#[cfg(target_os = "linux")]
+	#[pyo3(signature = (urgency: "int") -> "Notification")]
 	fn urgency<'a>(mut slf: PyRefMut<'a, Self>, urgency: i32) -> PyResult<PyRefMut<'a, Self>> {
 		match urgency {
 			0 => slf.0.urgency(Urgency::Low),
@@ -214,10 +231,12 @@ impl PyNotification {
 	// 	self.0.action(identifier, label);
 	// 	Ok(slf)
 	// }
+	#[pyo3(signature = (id: "int") -> "Notification")]
 	fn id<'a>(mut slf: PyRefMut<'a, Self>, id: u32) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.id(id);
 		Ok(slf)
 	}
+	#[pyo3(signature = () -> "Notification")]
 	fn finalize(slf: PyRef<Self>) -> PyResult<PyRef<Self>> {
 		slf.0.finalize();
 		Ok(slf)
@@ -225,6 +244,7 @@ impl PyNotification {
 
 	/// Shows the notification.
 	#[cfg(target_family = "unix")]
+	#[pyo3(signature = () -> "Notification")]
 	fn show(slf: PyRef<Self>) -> PyResult<PyNotificationHandle> {
 		match slf.0.show() {
 			Err(error) => Err(PyValueError::new_err(error.to_string())),
@@ -233,6 +253,7 @@ impl PyNotification {
 	}
 
 	#[cfg(not(target_family = "unix"))]
+	#[pyo3(signature = () -> "Notification")]
 	fn show(slf: PyRef<Self>) -> PyResult<()> {
 		match slf.0.show() {
 			Err(error) => Err(PyValueError::new_err(error.to_string())),

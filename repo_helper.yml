@@ -11,7 +11,6 @@ short_desc: 'Wrapper around notify-rust to show desktop notifications.'
 
 enable_conda: false
 enable_tests: false
-enable_docs: false
 use_maturin: true
 
 python_versions:
