@@ -15,7 +15,7 @@ assert n.get_subtitle() is None
 assert n.get_timeout() == TIMEOUT_DEFAULT
 
 if sys.platform == "win32":
-	assert n.show() is None
+	assert n.show() is None  # type: ignore[func-returns-value]
 else:
 	# this package
 	from notify_rs import NotificationHandle
