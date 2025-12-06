@@ -1,3 +1,4 @@
+/// Wrapper around notify-rust to show desktop notifications
 use notify_rust::{Notification, Timeout, Urgency};
 use pyo3::{exceptions::PyValueError, prelude::*};
 
@@ -8,7 +9,8 @@ use notify_rust::NotificationHandle;
 #[pyclass(name = "NotificationHandle")]
 #[repr(transparent)]
 #[derive(Debug)]
-/// A wrapper around a [`NotificationHandle`] that can be converted to and from python with `pyo3`.
+// A wrapper around a [`NotificationHandle`] that can be converted to and from python with `pyo3`.
+/// A handle to a shown notification.
 pub struct PyNotificationHandle(pub NotificationHandle);
 
 #[cfg(target_family = "unix")]
@@ -48,7 +50,11 @@ impl PyNotificationHandle {
 #[pyclass(name = "Notification")]
 #[repr(transparent)]
 #[derive(Debug, Clone)]
-/// A wrapper around a [`Notification`] that can be converted to and from python with `pyo3`.
+// A wrapper around a [`Notification`] that can be converted to and from python with `pyo3`.
+/// Desktop notification.
+///
+/// Most fields are empty by default, only appname is initialized with the name of the current executable.
+/// The appname is used by some desktop environments to group notifications.
 pub struct PyNotification(pub Notification);
 
 impl PyNotification {
@@ -70,22 +76,27 @@ impl PyNotification {
 		Ok(PyNotification::new())
 	}
 
+	/// Filled by default with executable name.
 	// #[getter]
 	fn get_appname<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.appname.clone())
 	}
+	/// Single line to summarize the content.
 	// #[getter]
 	fn get_summary<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.summary.clone())
 	}
+	/// Subtitle for macOS
 	// #[getter]
 	fn get_subtitle<'a>(slf: PyRefMut<'a, Self>) -> PyResult<Option<String>> {
 		Ok(slf.0.subtitle.clone())
 	}
+	/// Multiple lines possible, may support simple markup, check out get_capabilities() -> body-markup and body-hyperlinks.
 	// #[getter]
 	fn get_body<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.body.clone())
 	}
+	/// Use a file:// URI or a name in an icon theme, must be compliant freedesktop.org.
 	// #[getter]
 	fn get_icon<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.icon.clone())
@@ -98,6 +109,7 @@ impl PyNotification {
 	// TODO: fn get_actions<'a>(slf: PyRefMut<'a, Self>) -> PyResult<Vec<String>>{
 	// 	Ok(slf.0.actions)
 	// }
+	/// Lifetime of the Notification in ms. Often not respected by server, sorry.
 	// #[getter]
 	fn get_timeout<'a>(slf: PyRefMut<'a, Self>) -> PyResult<i32> {
 		match slf.0.timeout {
@@ -107,14 +119,21 @@ impl PyNotification {
 		}
 	}
 
+	/// Overwrite the appname field.
 	fn appname<'a>(mut slf: PyRefMut<'a, Self>, appname: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.appname(appname);
 		Ok(slf)
 	}
+	/// Set the summary.
+	///
+	/// Often acts as title of the notification. For more elaborate content use the body field.
 	fn summary<'a>(mut slf: PyRefMut<'a, Self>, summary: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.summary(summary);
 		Ok(slf)
 	}
+	/// Set the subtitle.
+	///
+	/// This is only useful on macOS; It’s not part of the XDG specification.
 	fn subtitle<'a>(mut slf: PyRefMut<'a, Self>, subtitle: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.subtitle(subtitle);
 		Ok(slf)
@@ -128,14 +147,28 @@ impl PyNotification {
 		slf.0.sound_name(name);
 		Ok(slf)
 	}
+	/// Set the content of the body field.
+	///
+	/// Multiline textual content of the notification. Each line should be treated as a paragraph. Simple html markup should be supported, depending on the server implementation.
 	fn body<'a>(mut slf: PyRefMut<'a, Self>, body: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.body(body);
 		Ok(slf)
 	}
+	/// Set the icon field.
+	///
+	/// You can use common icon names here; usually those in /usr/share/icons can all be used.
+	/// You can also use an absolute path to a file.
+	///
+	/// .. note:: macOS does not have support manually setting the icon
 	fn icon<'a>(mut slf: PyRefMut<'a, Self>, icon: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.icon(icon);
 		Ok(slf)
 	}
+	/// Set the icon field automatically.
+	///
+	/// This looks at your binary’s name and uses it to set the icon.
+	///
+	/// .. note:: macOS does not have support manually setting the icon
 	fn auto_icon<'a>(mut slf: PyRefMut<'a, Self>) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.auto_icon();
 		Ok(slf)
@@ -144,6 +177,7 @@ impl PyNotification {
 	// 	self.0.hint(hint);
 	// 	Ok(slf)
 	// }
+	/// Set the timeout.
 	fn timeout<'a>(mut slf: PyRefMut<'a, Self>, timeout: i32) -> PyResult<PyRefMut<'a, Self>> {
 		match timeout {
 			-1 => slf.0.timeout(Timeout::Default),
@@ -189,6 +223,7 @@ impl PyNotification {
 		Ok(slf)
 	}
 
+	/// Shows the notification.
 	#[cfg(target_family = "unix")]
 	fn show(slf: PyRef<Self>) -> PyResult<PyNotificationHandle> {
 		match slf.0.show() {
