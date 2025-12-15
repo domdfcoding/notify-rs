@@ -270,38 +270,45 @@ impl PyNotification {
 	fn get_appname<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.appname.clone())
 	}
+
 	/// Single line to summarize the content.
 	// #[getter]
 	#[pyo3(signature = () -> "str")]
 	fn get_summary<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.summary.clone())
 	}
+
 	/// Subtitle for macOS
 	// #[getter]
 	#[pyo3(signature = () -> "str | None")]
 	fn get_subtitle<'a>(slf: PyRefMut<'a, Self>) -> PyResult<Option<String>> {
 		Ok(slf.0.subtitle.clone())
 	}
+
 	/// Multiple lines possible, may support simple markup, check out get_capabilities() -> body-markup and body-hyperlinks.
 	// #[getter]
 	#[pyo3(signature = () -> "str")]
 	fn get_body<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.body.clone())
 	}
+
 	/// Use a file:// URI or a name in an icon theme, must be compliant freedesktop.org.
 	// #[getter]
 	#[pyo3(signature = () -> "str")]
 	fn get_icon<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.icon.clone())
 	}
+
 	// #[getter]
 	// TODO: fn get_hints<'a>(slf: PyRefMut<'a, Self>) -> PyResult<HashSet<Hint>>{
 	// 	Ok(slf.0.hints)
 	// }
+
 	// #[getter]
 	// TODO: fn get_actions<'a>(slf: PyRefMut<'a, Self>) -> PyResult<Vec<String>>{
 	// 	Ok(slf.0.actions)
 	// }
+
 	/// Lifetime of the Notification in ms. Often not respected by server, sorry.
 	// #[getter]
 	#[pyo3(signature = () -> "int")]
@@ -319,6 +326,7 @@ impl PyNotification {
 		slf.0.appname(appname);
 		Ok(slf)
 	}
+
 	/// Set the summary.
 	///
 	/// Often acts as title of the notification. For more elaborate content use the body field.
@@ -327,6 +335,7 @@ impl PyNotification {
 		slf.0.summary(summary);
 		Ok(slf)
 	}
+
 	/// Set the subtitle.
 	///
 	/// This is only useful on macOS; It’s not part of the XDG specification.
@@ -335,17 +344,20 @@ impl PyNotification {
 		slf.0.subtitle(subtitle);
 		Ok(slf)
 	}
+
 	#[pyo3(signature = (path: "str") -> "Notification")]
 	#[cfg(not(target_os = "macos"))]
-    fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: &str) -> PyResult<PyRefMut<'a, Self>> {
+	fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.image_path(path);
 		Ok(slf)
 	}
+
 	#[pyo3(signature = (name: "str") -> "Notification")]
 	fn sound_name<'a>(mut slf: PyRefMut<'a, Self>, name: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.sound_name(name);
 		Ok(slf)
 	}
+
 	/// Set the content of the body field.
 	///
 	/// Multiline textual content of the notification. Each line should be treated as a paragraph. Simple html markup should be supported, depending on the server implementation.
@@ -354,6 +366,7 @@ impl PyNotification {
 		slf.0.body(body);
 		Ok(slf)
 	}
+
 	/// Set the icon field.
 	///
 	/// You can use common icon names here; usually those in /usr/share/icons can all be used.
@@ -365,6 +378,7 @@ impl PyNotification {
 		slf.0.icon(icon);
 		Ok(slf)
 	}
+
 	/// Set the icon field automatically.
 	///
 	/// This looks at your binary’s name and uses it to set the icon.
@@ -375,6 +389,7 @@ impl PyNotification {
 		slf.0.auto_icon();
 		Ok(slf)
 	}
+
 	// TODO: fn hint<'a>(mut slf: PyRefMut<'a, Self>, hint: Hint) -> PyResult<PyRefMut<'a, Self>> {
 	// 	self.0.hint(hint);
 	// 	Ok(slf)
@@ -414,6 +429,7 @@ impl PyNotification {
 
 		Ok(slf)
 	}
+
 	// TODO: fn action<'a>(mut slf: PyRefMut<'a, Self>, identifier: &str, label: &str) -> PyResult<PyRefMut<'a, Self>> {
 	// 	self.0.action(identifier, label);
 	// 	Ok(slf)
@@ -447,6 +463,7 @@ impl PyNotification {
 			Ok(_) => Ok(()),
 		}
 	}
+
 	// TODO: async fn show_async(&self) -> Result<NotificationHandle>
 	// TODO: async fn show_async_at_bus(
 	// //     &self,
