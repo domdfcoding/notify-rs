@@ -180,7 +180,7 @@ impl PyNotificationHandle {
 			-2 => slf.0.timeout(Timeout::Never),
 			_ => {
 				if timeout >= 0 {
-					slf.0.timeout(Timeout::Never)
+					slf.0.timeout(timeout)
 				} else {
 					return Err(PyValueError::new_err(format!(
 						"Invalid timeout value {timeout}"
@@ -402,7 +402,7 @@ impl PyNotification {
 			-2 => slf.0.timeout(Timeout::Never),
 			_ => {
 				if timeout >= 0 {
-					slf.0.timeout(Timeout::Never)
+					slf.0.timeout(timeout)
 				} else {
 					return Err(PyValueError::new_err(format!(
 						"Invalid timeout value {timeout}"
