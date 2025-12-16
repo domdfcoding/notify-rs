@@ -1,9 +1,8 @@
 # stdlib
 import sys
 
-if sys.platform != "win32":
-
-	class NotificationHandle:
+class NotificationHandle:
+	if sys.platform != "win32":
 		if sys.platform == "linux":
 
 			def id(self) -> int: ...  # noqa: A001  # pylint: disable=redefined-builtin

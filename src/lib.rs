@@ -5,6 +5,14 @@ use pyo3::{exceptions::PyValueError, prelude::*};
 #[cfg(target_family = "unix")]
 use notify_rust::NotificationHandle;
 
+#[cfg(not(target_family = "unix"))]
+#[pyclass(name = "NotificationHandle")]
+#[repr(transparent)]
+#[derive(Debug)]
+// A wrapper around a [`NotificationHandle`] that can be converted to and from python with `pyo3`.
+/// A handle to a shown notification.
+pub struct PyNotificationHandle();
+
 #[cfg(target_family = "unix")]
 #[pyclass(name = "NotificationHandle")]
 #[repr(transparent)]
