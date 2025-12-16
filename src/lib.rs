@@ -6,7 +6,7 @@ use pyo3::{exceptions::PyValueError, prelude::*};
 use notify_rust::NotificationHandle;
 
 #[cfg(not(target_family = "unix"))]
-#[pyclass(name = "NotificationHandle")]
+#[pyclass(name = "NotificationHandle", module="notify_rs")]
 #[repr(transparent)]
 #[derive(Debug)]
 // A wrapper around a [`NotificationHandle`] that can be converted to and from python with `pyo3`.
@@ -14,7 +14,7 @@ use notify_rust::NotificationHandle;
 pub struct PyNotificationHandle();
 
 #[cfg(target_family = "unix")]
-#[pyclass(name = "NotificationHandle")]
+#[pyclass(name = "NotificationHandle", module="notify_rs")]
 #[repr(transparent)]
 #[derive(Debug)]
 // A wrapper around a [`NotificationHandle`] that can be converted to and from python with `pyo3`.
@@ -255,7 +255,7 @@ impl PyNotificationHandle {
 	}
 }
 
-#[pyclass(name = "Notification")]
+#[pyclass(name = "Notification", module="notify_rs")]
 #[repr(transparent)]
 #[derive(Debug, Clone)]
 // A wrapper around a [`Notification`] that can be converted to and from python with `pyo3`.
