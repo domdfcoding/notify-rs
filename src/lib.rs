@@ -133,14 +133,14 @@ impl PyNotificationHandle {
 
 	#[pyo3(signature = (path: "str") -> "NotificationHandle")]
 	#[cfg(not(target_os = "macos"))]
-	fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: &str) -> PyResult<PyRefMut<'a, Self>> {
-		slf.0.image_path(path);
+	fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: std::path::PathBuf) -> PyResult<PyRefMut<'a, Self>> {
+		slf.0.image_path(path.to_str().unwrap());
 		Ok(slf)
 	}
 
 	#[pyo3(signature = (path: "str") -> "NotificationHandle")]
 	#[cfg(target_os = "macos")]
-	fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: &str) -> PyResult<PyRefMut<'a, Self>> {
+	fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: std::path::PathBuf) -> PyResult<PyRefMut<'a, Self>> {
 		Ok(slf)
 	}
 
@@ -166,8 +166,8 @@ impl PyNotificationHandle {
 	///
 	/// .. note:: macOS does not have support manually setting the icon
 	#[pyo3(signature = (icon: "str") -> "NotificationHandle")]
-	fn icon<'a>(mut slf: PyRefMut<'a, Self>, icon: &str) -> PyResult<PyRefMut<'a, Self>> {
-		slf.0.icon(icon);
+	fn icon<'a>(mut slf: PyRefMut<'a, Self>, icon: std::path::PathBuf) -> PyResult<PyRefMut<'a, Self>> {
+		slf.0.icon(icon.to_str().unwrap());
 		Ok(slf)
 	}
 
@@ -367,14 +367,14 @@ impl PyNotification {
 
 	#[pyo3(signature = (path: "str") -> "Notification")]
 	#[cfg(not(target_os = "macos"))]
-	fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: &str) -> PyResult<PyRefMut<'a, Self>> {
-		slf.0.image_path(path);
+	fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: std::path::PathBuf) -> PyResult<PyRefMut<'a, Self>> {
+		slf.0.image_path(path.to_str().unwrap());
 		Ok(slf)
 	}
 
 	#[pyo3(signature = (path: "str") -> "Notification")]
 	#[cfg(target_os = "macos")]
-	fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: &str) -> PyResult<PyRefMut<'a, Self>> {
+	fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: std::path::PathBuf) -> PyResult<PyRefMut<'a, Self>> {
 		Ok(slf)
 	}
 
@@ -400,8 +400,8 @@ impl PyNotification {
 	///
 	/// .. note:: macOS does not have support manually setting the icon
 	#[pyo3(signature = (icon: "str") -> "Notification")]
-	fn icon<'a>(mut slf: PyRefMut<'a, Self>, icon: &str) -> PyResult<PyRefMut<'a, Self>> {
-		slf.0.icon(icon);
+	fn icon<'a>(mut slf: PyRefMut<'a, Self>, icon: std::path::PathBuf) -> PyResult<PyRefMut<'a, Self>> {
+		slf.0.icon(icon.to_str().unwrap());
 		Ok(slf)
 	}
 
