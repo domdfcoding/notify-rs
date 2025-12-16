@@ -130,6 +130,12 @@ impl PyNotificationHandle {
 		Ok(slf)
 	}
 
+	#[pyo3(signature = (path: "str") -> "NotificationHandle")]
+	#[cfg(target_os = "macos")]
+	fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: &str) -> PyResult<PyRefMut<'a, Self>> {
+		Ok(slf)
+	}
+
 	#[pyo3(signature = (name: "str") -> "NotificationHandle")]
 	fn sound_name<'a>(mut slf: PyRefMut<'a, Self>, name: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.sound_name(name);
@@ -205,6 +211,12 @@ impl PyNotificationHandle {
 			}
 		};
 
+		Ok(slf)
+	}
+
+	#[cfg(not(target_os = "linux"))]
+	#[pyo3(signature = (urgency: "int") -> "NotificationHandle")]
+	fn urgency<'a>(mut slf: PyRefMut<'a, Self>, urgency: i32) -> PyResult<PyRefMut<'a, Self>> {
 		Ok(slf)
 	}
 
@@ -352,6 +364,12 @@ impl PyNotification {
 		Ok(slf)
 	}
 
+	#[pyo3(signature = (path: "str") -> "Notification")]
+	#[cfg(target_os = "macos")]
+	fn image_path<'a>(mut slf: PyRefMut<'a, Self>, path: &str) -> PyResult<PyRefMut<'a, Self>> {
+		Ok(slf)
+	}
+
 	#[pyo3(signature = (name: "str") -> "Notification")]
 	fn sound_name<'a>(mut slf: PyRefMut<'a, Self>, name: &str) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.sound_name(name);
@@ -427,6 +445,12 @@ impl PyNotification {
 			}
 		};
 
+		Ok(slf)
+	}
+
+	#[cfg(not(target_os = "linux"))]
+	#[pyo3(signature = (urgency: "int") -> "Notification")]
+	fn urgency<'a>(mut slf: PyRefMut<'a, Self>, urgency: i32) -> PyResult<PyRefMut<'a, Self>> {
 		Ok(slf)
 	}
 
