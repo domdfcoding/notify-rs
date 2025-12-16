@@ -87,7 +87,7 @@ notify-rs
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/notify-rs
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/notify-rs/v0.2.1
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/notify-rs/v0.3.0
 	:target: https://github.com/domdfcoding/notify-rs/pulse
 	:alt: GitHub commits since tagged version
 
