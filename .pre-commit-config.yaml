@@ -87,3 +87,9 @@ repos:
       exclude: ^(doc-source/conf|__pkginfo__|setup)\.(_)?py$
 
 # Custom hooks can be added below this comment
+
+ - repo: https://github.com/doublify/pre-commit-rust
+   rev: v1.0
+   hooks:
+    - id: fmt
+    - id: cargo-check
