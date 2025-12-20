@@ -53,7 +53,7 @@ class Notification:
 
 	if sys.platform == "win32":
 
-		def show(self) -> None: ...
+		def show(self) -> Notification: ...
 
 	else:
 

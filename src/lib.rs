@@ -244,22 +244,24 @@ impl PyNotificationHandle {
 	}
 
 	/// Shows the notification.
+	///
+	/// On Windows this returns the :class:`~.Notification`;
+	/// on Unix and other OSes it returns a :class:`~.NotificationHandle`, which can be used to modify the notification later.
 	#[cfg(target_family = "unix")]
 	#[pyo3(signature = () -> "NotificationHandle")]
 	fn show(slf: PyRef<Self>) -> PyResult<PyNotificationHandle> {
 		match slf.0.show() {
 			Err(error) => Err(PyValueError::new_err(error.to_string())),
-			// Ok(result) => Ok(PyNotificationHandle(Some(result))),
 			Ok(result) => Ok(PyNotificationHandle(result)),
 		}
 	}
 
 	#[cfg(not(target_family = "unix"))]
-	#[pyo3(signature = () -> "NotificationHandle")]
-	fn show(slf: PyRef<Self>) -> PyResult<()> {
+	#[pyo3(signature = () -> "Notification")]
+	fn show<'a>(mut slf: PyRefMut<'a, Self>) -> PyResult<PyRef<Self>> {
 		match slf.0.show() {
 			Err(error) => Err(PyValueError::new_err(error.to_string())),
-			Ok(_) => Ok(()),
+			Ok(_) => Ok(slf),
 		}
 	}
 }
