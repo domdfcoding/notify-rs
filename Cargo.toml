@@ -1,6 +1,6 @@
 [package]
 name = "notify-rs"
-version = "0.4.0"
+version = "0.4.1"
 edition = "2024"
 description = "Wrapper around notify-rust to show desktop notifications."
 license = "MIT"
