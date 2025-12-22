@@ -48,14 +48,15 @@ impl PyNotificationHandle {
 	// }
 	// TODO: fn on_close<A>(self, handler: impl CloseHandler<A>)
 	#[cfg(target_os = "linux")]
-	#[pyo3(signature = () -> "Notification")]
-	fn update<'a>(mut slf: PyRefMut<'a, Self>) {
+	#[pyo3(signature = () -> "NotificationHandle")]
+	fn update<'a>(mut slf: PyRefMut<'a, Self>) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.update();
+		Ok(slf)
 	}
 
 	// TODO: macOS
 	#[cfg(target_os = "linux")]
-	#[pyo3(signature = () -> "Notification")]
+	#[pyo3(signature = () -> "int")]
 	fn id(&self) -> PyResult<u32> {
 		Ok(self.0.id())
 	}
