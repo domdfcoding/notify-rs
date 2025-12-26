@@ -5,7 +5,6 @@ exclude: ^$
 
 ci:
   autoupdate_schedule: quarterly
-  skip: [fmt, cargo-check]
 
 repos:
  - repo: https://github.com/repo-helper/pyproject-parser
