@@ -48,6 +48,7 @@ license-key = "MIT"
 package = "notify_rs"
 
 [tool.importcheck]
+always = [ "notify_rs", "imports_test",]
 
 [tool.mypy]
 python_version = "3.9"
