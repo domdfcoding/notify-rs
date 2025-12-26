@@ -527,8 +527,6 @@ impl PyNotification {
 #[pymodule]
 fn notify_rs(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
 	m.add_class::<PyNotification>().unwrap();
-
-	#[cfg(target_family = "unix")]
 	m.add_class::<PyNotificationHandle>().unwrap();
 
 	m.add("TIMEOUT_NEVER", -2).unwrap();
