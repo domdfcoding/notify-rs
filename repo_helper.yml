@@ -5,7 +5,7 @@ copyright_years: '2025'
 author: 'Dominic Davis-Foster'
 email: 'dominic@davis-foster.co.uk'
 username: 'domdfcoding'
-version: '0.4.2'
+version: '0.5.0'
 license: 'MIT'
 short_desc: 'Wrapper around notify-rust to show desktop notifications.'
 
