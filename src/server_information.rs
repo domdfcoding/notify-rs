@@ -1,8 +1,4 @@
-use notify_rust::get_server_information;
 use pyo3::{exceptions::PyRuntimeError, intern, prelude::*, types::PyDict};
-
-#[cfg(not(all(unix, not(target_os = "macos"))))]
-use pyo3::exceptions::PyNotImplementedError;
 
 #[pyclass(name = "ServerInformation", module = "notify_rs")]
 #[derive(Debug)]
@@ -41,6 +37,9 @@ impl PyServerInformation {
 }
 
 #[cfg(all(unix, not(target_os = "macos")))]
+use notify_rust::get_server_information;
+
+#[cfg(all(unix, not(target_os = "macos")))]
 #[pyfunction(name = "get_server_information")]
 /// Returns a struct containing ServerInformation.
 ///
@@ -57,6 +56,9 @@ pub fn get_server_information_py() -> PyResult<PyServerInformation> {
 		Err(e) => Err(PyRuntimeError::new_err(e.to_string())),
 	}
 }
+
+#[cfg(not(all(unix, not(target_os = "macos"))))]
+use pyo3::exceptions::PyNotImplementedError;
 
 #[cfg(not(all(unix, not(target_os = "macos"))))]
 #[pyfunction(name = "get_server_information")]
