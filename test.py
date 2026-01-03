@@ -2,7 +2,7 @@
 import sys
 
 # this package
-from notify_rs import TIMEOUT_DEFAULT, URGENCY_CRITICAL, Notification
+from notify_rs import TIMEOUT_DEFAULT, URGENCY_CRITICAL, Notification, ServerInformation, get_server_information
 
 n = Notification().summary("The summary").body("The body").urgency(URGENCY_CRITICAL)
 
@@ -25,3 +25,11 @@ else:
 
 	assert isinstance(handle, NotificationHandle)
 	handle.id()
+
+server_info = get_server_information()
+assert isinstance(server_info, ServerInformation)
+
+print(f"{server_info.name=}")
+print(f"{server_info.vendor=}")
+print(f"{server_info.version=}")
+print(f"{server_info.spec_version=}")

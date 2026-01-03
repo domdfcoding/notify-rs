@@ -65,6 +65,14 @@ class Notification:
 	def get_icon(self) -> str: ...
 	def get_timeout(self) -> int: ...
 
+class ServerInformation:
+	name: str
+	vendor: str
+	version: str
+	spec_version: str
+
+def get_server_information() -> ServerInformation: ...
+
 TIMEOUT_NEVER: int
 TIMEOUT_DEFAULT: int
 URGENCY_LOW: int
