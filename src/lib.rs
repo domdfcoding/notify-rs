@@ -8,7 +8,7 @@ use crate::notification_handle::PyNotificationHandle;
 use crate::server_information::{PyServerInformation, get_server_information_py};
 
 #[pymodule]
-fn notify_rs(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn _notify_rs(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
 	m.add_class::<PyNotification>().unwrap();
 	m.add_class::<PyNotificationHandle>().unwrap();
 	m.add_class::<PyServerInformation>().unwrap();

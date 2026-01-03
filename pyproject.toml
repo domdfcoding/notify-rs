@@ -154,3 +154,7 @@ autodoc_exclude_members = [
     "__abstractmethods__",
     "__hash__",
 ]
+
+[tool.maturin]
+python-source = "python"
+module-name = "notify_rs._notify_rs"
