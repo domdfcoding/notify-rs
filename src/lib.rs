@@ -1,5 +1,6 @@
-/// Wrapper around notify-rust to show desktop notifications
 use pyo3::prelude::*;
+/// Wrapper around notify-rust to show desktop notifications
+use std::collections::HashMap;
 mod notification;
 mod notification_handle;
 mod server_information;
@@ -15,6 +16,8 @@ fn _notify_rs(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
 
 	let get_server_information = wrap_pyfunction!(get_server_information_py, m)?;
 	get_server_information.setattr("__module__", "notify_rs")?;
+	let mut annotations: HashMap<&str, &str> = HashMap::new();
+	annotations.insert("return", "ServerInformation");
 	m.add_function(get_server_information).unwrap();
 
 	m.add("TIMEOUT_NEVER", -2).unwrap();

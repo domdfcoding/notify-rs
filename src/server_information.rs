@@ -1,12 +1,12 @@
 use notify_rust::get_server_information;
-use pyo3::{
-	exceptions::{PyNotImplementedError, PyRuntimeError},
-	prelude::*,
-};
+use pyo3::{exceptions::PyRuntimeError, intern, prelude::*, types::PyDict};
+
+#[cfg(not(all(unix, not(target_os = "macos"))))]
+use pyo3::exceptions::PyNotImplementedError;
 
 #[pyclass(name = "ServerInformation", module = "notify_rs")]
 #[derive(Debug)]
-/// Return value of :class:`~.get_server_information()`.
+/// Return value of :func:`~.get_server_information()`.
 pub struct PyServerInformation {
 	#[pyo3(get, set)]
 	/// The product name of the server.
@@ -23,6 +23,21 @@ pub struct PyServerInformation {
 	#[pyo3(get, set)]
 	/// The specification version the server is compliant with.
 	pub spec_version: String,
+}
+
+#[pymethods]
+impl PyServerInformation {
+	#[classattr]
+	pub fn __annotations__(py: Python<'_>) -> PyResult<Py<PyAny>> {
+		let builtins = PyModule::import(py, "builtins")?;
+		let t = builtins.getattr(intern!(py, "int"))?;
+		let dict = PyDict::new(py);
+		dict.set_item("name", &t)?;
+		dict.set_item("vendor", &t)?;
+		dict.set_item("version", &t)?;
+		dict.set_item("spec_version", &t)?;
+		Ok(dict.into())
+	}
 }
 
 #[cfg(all(unix, not(target_os = "macos")))]

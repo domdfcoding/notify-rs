@@ -33,3 +33,9 @@ exclude_files:
 
 tox_unmanaged:
   - testenv:build
+
+extra_sphinx_extensions:
+  - variable_no_docstring
+
+sphinx_conf_epilogue:
+  - nitpicky = True
