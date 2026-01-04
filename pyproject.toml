@@ -107,6 +107,7 @@ extensions = [
     "seed_intersphinx_mapping",
     "html_section",
     "variable_no_docstring",
+    "sphinx_toolbox.more_autosummary.column_widths",
 ]
 gitstamp_fmt = "%d %b %Y"
 templates_path = [ "_templates",]

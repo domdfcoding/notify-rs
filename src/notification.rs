@@ -57,6 +57,8 @@ impl PyNotification {
 	/// Multiple lines possible, may support simple markup, check out get_capabilities() -> body-markup and body-hyperlinks.
 	///
 	/// :rtype: :class:`str`
+	///
+	/// .. latex:clearpage::
 	#[pyo3(signature = () -> "str")]
 	fn get_body<'a>(slf: PyRefMut<'a, Self>) -> PyResult<String> {
 		Ok(slf.0.body.clone())
@@ -128,6 +130,8 @@ impl PyNotification {
 	/// Path to an image to use in the ``image_data`` hint.
 	///
 	/// :rtype: :class:`~.Notification`
+	///
+	/// .. latex:clearpage::
 	#[pyo3(signature = (path: "str") -> "Notification")]
 	fn image_path<'a>(
 		mut slf: PyRefMut<'a, Self>,
@@ -142,6 +146,8 @@ impl PyNotification {
 	/// Path to an image to use in the ``image_data`` hint.
 	///
 	/// :rtype: :class:`~.Notification`
+	/// 
+	/// .. latex:clearpage::
 	#[pyo3(signature = (path: "str") -> "Notification")]
 	fn image_path<'a>(
 		mut slf: PyRefMut<'a, Self>,
@@ -235,6 +241,8 @@ impl PyNotification {
 	/// :param body: :class:`int`
 	///
 	/// :rtype: :class:`~.Notification`
+	/// 
+	/// .. latex:clearpage::
 	#[pyo3(signature = (urgency: "int") -> "Notification")]
 	fn urgency<'a>(mut slf: PyRefMut<'a, Self>, urgency: i32) -> PyResult<PyRefMut<'a, Self>> {
 		match urgency {
@@ -257,6 +265,8 @@ impl PyNotification {
 	/// :param body: :class:`int`
 	///
 	/// :rtype: :class:`~.Notification`
+	/// 
+	/// .. latex:clearpage::
 	#[pyo3(signature = (urgency: "int") -> "Notification")]
 	fn urgency<'a>(mut slf: PyRefMut<'a, Self>, urgency: i32) -> PyResult<PyRefMut<'a, Self>> {
 		Ok(slf)

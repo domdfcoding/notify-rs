@@ -36,6 +36,7 @@ tox_unmanaged:
 
 extra_sphinx_extensions:
   - variable_no_docstring
+  - sphinx_toolbox.more_autosummary.column_widths
 
 sphinx_conf_epilogue:
   - nitpicky = True

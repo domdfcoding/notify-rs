@@ -102,6 +102,8 @@ impl PyNotificationHandle {
 	/// Lifetime of the Notification in ms. Often not respected by server, sorry.
 	///
 	/// :rtype: :class:`int`
+	/// 
+	/// .. latex:clearpage::
 	#[pyo3(signature = () -> "int")]
 	fn get_timeout<'a>(slf: PyRefMut<'a, Self>) -> PyResult<i32> {
 		match slf.0.timeout {
@@ -214,6 +216,8 @@ impl PyNotificationHandle {
 	/// .. note:: macOS does not have support manually setting the icon
 	///
 	/// :rtype: :class:`~.Notification`
+	/// 
+	/// .. latex:clearpage::
 	#[pyo3(signature = () -> "NotificationHandle")]
 	fn auto_icon<'a>(mut slf: PyRefMut<'a, Self>) -> PyResult<PyRefMut<'a, Self>> {
 		slf.0.auto_icon();
@@ -230,6 +234,8 @@ impl PyNotificationHandle {
 	/// :param body: :class:`int`
 	///
 	/// :rtype: :class:`~.Notification`
+	/// 
+	/// .. latex:clearpage::
 	#[pyo3(signature = (timeout: "int") -> "NotificationHandle")]
 	fn timeout<'a>(mut slf: PyRefMut<'a, Self>, timeout: i32) -> PyResult<PyRefMut<'a, Self>> {
 		match timeout {
