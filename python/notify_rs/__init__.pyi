@@ -2,6 +2,7 @@
 import os
 import pathlib
 import sys
+from typing import List
 
 PathLike = str | pathlib.Path | os.PathLike
 
@@ -72,6 +73,7 @@ class ServerInformation:
 	spec_version: str
 
 def get_server_information() -> ServerInformation: ...
+def get_capabilities() -> List[str]: ...
 
 TIMEOUT_NEVER: int
 TIMEOUT_DEFAULT: int
