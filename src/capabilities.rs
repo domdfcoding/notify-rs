@@ -22,7 +22,7 @@ use pyo3::exceptions::PyNotImplementedError;
 /// Returns a struct containing ServerInformation.
 ///
 /// This struct contains name, vendor, version and spec_version of the notification server running.
-pub fn get_capabilities_py() -> PyResult<PyServerInformation> {
+pub fn get_capabilities_py() -> PyResult<Vec<String>> {
 	Err(PyNotImplementedError::new_err(
 		"Not supported on this platform.",
 	))
