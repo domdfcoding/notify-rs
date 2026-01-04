@@ -146,7 +146,7 @@ impl PyNotification {
 	/// Path to an image to use in the ``image_data`` hint.
 	///
 	/// :rtype: :class:`~.Notification`
-	/// 
+	///
 	/// .. latex:clearpage::
 	#[pyo3(signature = (path: "str") -> "Notification")]
 	fn image_path<'a>(
@@ -241,7 +241,7 @@ impl PyNotification {
 	/// :param body: :class:`int`
 	///
 	/// :rtype: :class:`~.Notification`
-	/// 
+	///
 	/// .. latex:clearpage::
 	#[pyo3(signature = (urgency: "int") -> "Notification")]
 	fn urgency<'a>(mut slf: PyRefMut<'a, Self>, urgency: i32) -> PyResult<PyRefMut<'a, Self>> {
@@ -265,7 +265,7 @@ impl PyNotification {
 	/// :param body: :class:`int`
 	///
 	/// :rtype: :class:`~.Notification`
-	/// 
+	///
 	/// .. latex:clearpage::
 	#[pyo3(signature = (urgency: "int") -> "Notification")]
 	fn urgency<'a>(mut slf: PyRefMut<'a, Self>, urgency: i32) -> PyResult<PyRefMut<'a, Self>> {

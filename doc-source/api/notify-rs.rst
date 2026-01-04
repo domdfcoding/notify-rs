@@ -2,7 +2,7 @@
 :mod:`notify_rs`
 ====================
 
-.. autosummary-widths:: 1/3 
+.. autosummary-widths:: 1/3
 .. automodule:: notify_rs
 
 .. autovariable:: TIMEOUT_NEVER
