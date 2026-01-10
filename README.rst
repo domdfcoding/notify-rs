@@ -99,7 +99,7 @@ notify-rs
 	:alt: Maintenance
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/notify-rs
-	:target: https://pypi.org/project/notify-rs/
+	:target: https://pypistats.org/packages/notify-rs
 	:alt: PyPI - Downloads
 
 .. end shields
